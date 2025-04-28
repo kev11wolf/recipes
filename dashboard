@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f5f5f5;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        #dashboard-wrapper {
+            width: 100%;
+            max-width: 1200px;
+            margin-bottom: 20px;
+        }
+        .dashboard {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .column {
+            flex: 1 1 30%;
+            margin: 10px;
+            padding: 20px;
+            background-color: #99d3c5;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .in-progress {
+            background-color: #01916D;
+        }
+        .complete {
+            background-color: #214C42;
+        }
+        .column h2 {
+            margin-bottom: 10px;
+        }
+        .column ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .column li {
+            padding: 10px;
+            background-color: #e0f7fa;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            position: relative;
+        }
+        .filter-form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .filter-form input, .filter-form select {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            border: 1px solid #999;
+        }
+        .input-form {
+            width: 100%;
+            max-width: 800px;
+            background-color: #ffffff;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .input-form input, .input-form select, .input-form button {
+            width: calc(33.33% - 10px);
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            border: 1px solid #999;
+        }
+        .log {
+            max-height: 200px;
+            overflow-y: auto;
+            background-color: #eef;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="dashboard-wrapper">
+            <div class="filter-form">
+                <select id="filter-status">
+                    <option value="" disabled selected>Filter by Bucket</option>
+                    <option value="not-started">Not Started</option>
+                    <option value="in-progress">In Progress</option>
+                    <option value="complete">Complete</option>
+                </select>
+                <input type="text" id="filter-assignee" placeholder="Filter by Assignee">
+                <button onclick="filterTasks()">Apply Filter</button>
+            </div>
+            <div class="dashboard">
+                <div class="column">
+                    <h2>Not Started</h2>
+                    <ul id="not-started-list">
+                        <!-- Task items will be added here -->
+                    </ul>
+                </div>
+                <div class="column in-progress">
+                    <h2>In Progress</h2>
+                    <ul id="in-progress-list">
+                        <!-- Task items will be added here -->
+                    </ul>
+                </div>
+                <div class="column complete">
+                    <h2>Complete</h2>
+                    <ul id="complete-list">
+                        <!-- Task items will be added here -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="input-form">
+            <form id="task-form">
+                <select id="task-status" required>
+                    <option value="" disabled selected>Select Bucket</option>
+                    <option value="not-started">Not Started</option>
+                    <option value="in-progress">In Progress</option>
+                    <option value="complete">Complete</option>
+                </select>
+                <input type="text" id="task-action" placeholder="Action Item" required>
+                <input type="text" id="task-assignee" placeholder="Assigned To" required>
+                <button type="submit">Submit Task</button>
+            </form>
+        </div>
+        <div class="log" id="activity-log"></div>
+    </div>
+    <script>
+        const tasks = [];
+        const activityLog = document.getElementById('activity-log');
+
+        document.getElementById('task-form').addEventListener('submit', function(event){
+            event.preventDefault();
+            const status = document.getElementById('task-status').value;
+            const action = document.getElementById('task-action').value;
+            const assignee = document.getElementById('task-assignee').value;
+
+            const newTask = document.createElement('li');
+            newTask.textContent = `${action} - ${assignee}`;
+            tasks.push({ status, action, assignee });
+
+            appendTaskToList(status, newTask);
+            addActivityLog(`Added: ${action} - ${assignee} to ${status}`);
+
+            document.getElementById('task-form').reset();
+        });
+
+        function appendTaskToList(status, taskElement) {
+            if(status === 'not-started') {
+                document.getElementById('not-started-list').appendChild(taskElement);
+            } else if(status === 'in-progress') {
+                document.getElementById('in-progress-list').appendChild(taskElement);
+            } else if(status === 'complete') {
+                document.getElementById('complete-list').appendChild(taskElement);
+            }
+        }
+
+        function addActivityLog(logMessage) {
+            const logEntry = document.createElement('div');
+            logEntry.textContent = logMessage;
+            activityLog.appendChild(logEntry);
+        }
+
+        function filterTasks() {
+            const filterStatus = document.getElementById('filter-status').value;
+            const filterAssignee = document.getElementById('filter-assignee').value.toLowerCase();
+
+            document.querySelectorAll('.dashboard .column ul').forEach((list) => list.innerHTML = '');
+
+            tasks.forEach(({status, action, assignee}) => {
+                if ((filterStatus === '' || filterStatus === status) &&
+                    (filterAssignee === '' || assignee.toLowerCase().includes(filterAssignee))) {
+                    const newTask = document.createElement('li');
+                    newTask.textContent = `${action} - ${assignee}`;
+                    appendTaskToList(status, newTask);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
