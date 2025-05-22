@@ -8,21 +8,28 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet" />
 <style>
   body {
-    font-family: 'Montserrat', sans-serif;
     margin: 0;
-    background-color: #fafafa;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f9f9f9; /* Light theme */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     color: #333;
   }
-  /* Header: logo + title + dropdown */
+
+  /* Header styling with frosted glass + solid dropdown background */
   .header {
     display: flex;
     align-items: center;
     padding: 10px 20px;
-    background-color: #2c3e50;
+    backdrop-filter: blur(10px);
+    background: rgba(255,255,255,0.7);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     position: sticky;
     top: 0;
     z-index: 999;
   }
+
   #logo {
     max-height: 50px;
     cursor: pointer;
@@ -33,97 +40,118 @@
   #logo:hover {
     transform: scale(1.05);
   }
+
   h1 {
     flex: 1;
     margin: 0;
-    color: #fff;
     font-size: 1.8em;
+    color: #333;
   }
-  /* Dropdown styles */
+
+  /* Dropdown with solid background */
   .dropdown {
     position: relative;
   }
   .dropbtn {
-    background-color: #3498db;
+    background-color: #34495e;
     color: #fff;
     padding: 10px 16px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-weight: bold;
   }
   .dropbtn:hover {
-    background-color: #2980b9;
+    background-color: #2c3e50;
   }
   .dropdown-content {
     display: none;
     position: absolute;
     right: 0;
     top: 40px;
-    background-color: #fff;
+    background: #34495e;
     min-width: 200px;
     border-radius: 5px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+  .dropdown:hover .dropdown-content {
+    display: block;
   }
   .dropdown-content a {
     display: block;
     padding: 12px 16px;
     text-decoration: none;
-    color: #333;
+    color: #ecf0f1;
   }
   .dropdown-content a:hover {
-    background-color: #f1f1f1;
+    background-color: #2c3e50;
   }
-  /* Show menu on hover */
-  .dropdown:hover .dropdown-content {
-    display: block;
-  }
-  /* Main content styling */
+
+  /* Main container and arrows */
   #main-container {
+    flex: 1;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
   }
-  /* Slideshow */
+  .arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2em;
+    cursor: pointer;
+    user-select: none;
+    padding: 10px;
+    background: rgba(255,255,255,0.6);
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    z-index: 10;
+  }
+  #left-arrow { left: 10px; }
+  #right-arrow { right: 10px; }
+
+  /* Slideshow & quote styles */
   #slideshow {
     max-width: 100%;
     max-height: 500px;
-    margin: 0 auto 20px;
-    position: relative;
-    overflow: hidden;
+    margin-bottom: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
   }
-  #slideshow img {
+  #slide-image {
     width: auto;
     max-height: 500px;
     display: block;
     margin: 0 auto;
+    border-radius: 10px;
   }
-  /* Quote styling */
   #quote {
     font-style: italic;
     text-align: center;
-    margin: 20px 0;
     max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-    font-size: 1.2em;
+    margin: 20px auto;
+    font-size: 1.3em;
     padding: 0 10px;
     color: #555;
   }
-  /* Recipe styles (same as previous) */
+
+  /* Recipe styles */
 .recipe-card {
     max-width: 800px;
     margin: auto;
-    background: #fff;
+    background: rgba(255,255,255,0.8);
+    backdrop-filter: blur(10px);
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     padding: 30px;
+    color: #2c3e50;
 }
 h1 {
     text-align: center;
     font-size: 2.2em;
     margin-bottom: 10px;
-    color: #2c3e50;
 }
 .image-container {
     text-align: center;
@@ -176,16 +204,16 @@ li {
 .footer {
     text-align: center;
     font-size: 0.9em;
-    color: #777;
+    color: #555;
     margin-top: 40px;
 }
 </style>
 </head>
 <body>
 
-<!-- Header with logo, title, dropdown -->
+<!-- Header -->
 <div class="header">
-  <a href="#" id="home-logo"><img src="https://cdn.dribbble.com/userupload/30984636/file/original-fbec83aebed9cb105f7bde614fd5adee.jpg?format=webp&resize=400x300&vertical=center" alt="Logo" id="logo"></a>
+  <a href="#" id="home-logo"><img src="https://cdn.dribbble.com/userupload/30984636/file/original-fbec83aebed9cb105f7bde614fd5adee.jpg?format=webp&resize=400x300&vertical=center" id="logo" alt="Logo"></a>
   <h1>My Recipe Collection</h1>
   <div class="dropdown">
     <button class="dropbtn">My Recipes</button>
@@ -204,27 +232,43 @@ li {
   </div>
 </div>
 
-<!-- Main container -->
+<!-- Main container with arrows -->
 <div id="main-container">
-  <!-- Default view: slideshow + quote -->
   <div id="slideshow">
-    <img id="slide-image" src="" alt="Slideshow Image" />
+    <img id="slide-image" src="" alt="Slideshow" />
   </div>
-  <div id="quote">
-    "Cooking is an art, but all art requires knowing the basics." — Julia Child
-  </div>
+  <div id="quote"></div>
+  <!-- Navigation arrows -->
+  <div id="left-arrow" class="arrow">←</div>
+  <div id="right-arrow" class="arrow">→</div>
 </div>
 
-<!-- Include jsPDF & html2canvas libraries -->
+<!-- Scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <script>
+// =================== Quotes ===================
+const quotes = [
+  "Cooking is an art, but all art requires knowing the basics. - Julia Child",
+  "The only real stumbling block is fear of failure. - Gordon Ramsay",
+  "Cooking is like love. It should be entered into with abandon or not at all. - Harriet Van Horne",
+  "No one is born a great cook, one learns by doing. - Julia Child",
+  "A recipe has no soul. You as the cook must bring soul to the recipe. - Thomas Keller",
+  "Good food is the foundation of genuine happiness. - Auguste Escoffier",
+  "The secret of success in the kitchen is love. - Paul Bocuse",
+  "Cooking is at once child's play and adult joy. And cooking done with care is an act of love. - Craig Claiborne",
+  "Cooking is like painting or writing a song. Just as there are only so many notes or colors, there are only so many flavors—it's how you combine them that sets you apart. - Wolfgang Puck",
+  "The kitchen is the heart of the home. - Unknown",
+  // ... (additional quotes if needed)
+];
+
+// =================== Slideshow & quote ===================
 const images = [
   "https://www.foodandwine.com/thmb/fjNakOY7IcuvZac1rR3JcSo7vzI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/FAW-recipes-pasta-sausage-basil-and-mustard-hero-06-cfd1c0a2989e474ea7e574a38182bbee.jpg",
   "https://www.foodandwine.com/thmb/2rPeNfC5SBMLPdqeY45IQjVj0bQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/garlicky-braised-lamb-shanks-with-sweet-peppers-XL-RECIPE0918-1213bf958ab544208a26f6a8ed0af4c7.jpg",
   "https://www.foodandwine.com/thmb/8-reBEkSSD3PPW2XAUJTW_k6VIs=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Adobo-Chicken-Wings-FT-RECIPE0722-16280904bb054deca32db1d3a7dd4fe0.jpg",
-  "https://www.simplyrecipes.com/thmb/FRlM2EEuix3dh1WxFD2R_Gp-V4c=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Simply-Recipes-Most-Popular-Recipes-Feature-LEAD-04-b4cc7e7bcfbe486586053a8e0a927d2f.jpg"
+  "https://www.simplyrecipes.com/thmb/FRlM2EEuix3dh1WxFD2R_Gp-V4c=/1500x0/filters:no_upscale():max_bytes(150000)/strip_icc()/Simply-Recipes-Most-Popular-Recipes-Feature-LEAD-04-b4cc7e7bcfbe486586053a8e0a927d2f.jpg"
 ];
 
 let slideIndex = 0;
@@ -233,7 +277,6 @@ let slideInterval = null;
 function showSlide(index) {
   document.getElementById('slide-image').src = images[index];
 }
-
 function startSlideshow() {
   if (slideInterval) clearInterval(slideInterval);
   slideInterval = setInterval(() => {
@@ -242,174 +285,322 @@ function startSlideshow() {
   }, 3000);
 }
 
-// When page loads, start slideshow
-document.addEventListener("DOMContentLoaded", () => {
+// =================== Initialization ===================
+const recipes = ['recipe1','recipe2','recipe3','recipe4','recipe5','recipe6'];
+let currentRecipeIndex = 0;
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialize quote
+  document.getElementById('quote').textContent = getRandomQuote();
+  // Initialize slideshow
   showSlide(slideIndex);
   startSlideshow();
+  // Show arrows
+  document.getElementById('left-arrow').style.display = 'block';
+  document.getElementById('right-arrow').style.display = 'block';
 });
 
-// When user clicks logo, return to default view
-document.getElementById('home-logo').addEventListener('click', (e) => {
-  e.preventDefault();
+// =================== Reset home ===================
+function resetHome() {
+  // Stop slideshow
+  clearInterval(slideInterval);
+  // Reset main container content
   document.getElementById('main-container').innerHTML = `
     <div id="slideshow">
-      <img id="slide-image" src="" alt="Slideshow Image" />
+      <img id="slide-image" src="" alt="Slideshow" />
     </div>
-    <div id="quote">
-      "Cooking is an art, but all art requires knowing the basics." — Julia Child
-    </div>`;
+    <div id="quote"></div>
+    <div id="left-arrow" class="arrow">←</div>
+    <div id="right-arrow" class="arrow">→</div>`;
+  // Reinitialize slideshow
   showSlide(slideIndex);
   startSlideshow();
+  // Re-set quote
+  document.getElementById('quote').textContent = getRandomQuote();
+  // Show arrows
+  document.getElementById('left-arrow').style.display = 'block';
+  document.getElementById('right-arrow').style.display = 'block';
+  // Reset recipe index
+  currentRecipeIndex = 0;
+}
+
+// =================== Logo click handler ===================
+document.getElementById('home-logo').addEventListener('click', (e) => {
+  e.preventDefault();
+  resetHome();
 });
 
-// When a recipe is loaded, stop slideshow
-function loadRecipe(recipeId) {
+// =================== Arrow navigation ===================
+document.getElementById('left-arrow').onclick = () => {
+  // Stop slideshow when cycling recipes
   clearInterval(slideInterval);
-  const container = document.getElementById('main-container');
-  container.innerHTML = ''; // clear slideshow + quote
+  // Cycle to previous recipe
+  currentRecipeIndex = (currentRecipeIndex - 1 + recipes.length) % recipes.length;
+  loadRecipe(recipes[currentRecipeIndex]);
+};
+document.getElementById('right-arrow').onclick = () => {
+  clearInterval(slideInterval);
+  currentRecipeIndex = (currentRecipeIndex + 1) % recipes.length;
+  loadRecipe(recipes[currentRecipeIndex]);
+};
+
+// =================== Load recipe function ===================
+function loadRecipe(recipeId) {
+  // Stop slideshow when viewing recipe
+  clearInterval(slideInterval);
+  // Update currentRecipeIndex based on recipeId
+  currentRecipeIndex = recipes.indexOf(recipeId);
   // Load recipe content
   if (recipeId === 'recipe1') {
-    container.innerHTML = `
+    document.getElementById('main-container').innerHTML = `
     <div class="recipe-card" id="recipe-card">
       <h1>Salmon with Sun-Dried Tomato Cream Sauce</h1>
       <div class="image-container">
-        <img src="https://wellnessbykay.com/wp-content/uploads/2024/05/marry-me-salmon-recipe.jpg" alt="Salmon Dish" class="recipe-image" />
+        <img src="https://wellnessbykay.com/wp-content/uploads/2024/05/marry-me-salmon-recipe.jpg" alt="Salmon" class="recipe-image" />
       </div>
-      <div class="btn-container">
-        <button id="exportPdf">Export to PDF</button>
-      </div>
+      <div class="btn-container"><button id="exportPdf">Export to PDF</button></div>
       <section>
         <h2>Ingredients</h2>
-        <h3>Salmon</h3>
         <ul>
-          <li>0.8 lbs (400g) fresh salmon, cubed</li>
+          <li>0.8 lbs (400g) salmon, cubed</li>
           <li>1 tbsp olive oil</li>
           <li>2 tsp paprika</li>
           <li>1 tsp garlic powder</li>
-          <li>1 tsp seasoning salt (or fish seasoning)</li>
+          <li>1 tsp seasoning salt</li>
           <li>1 tsp Italian seasoning</li>
           <li>1 tsp black pepper</li>
-          <li>1/4 cup white cooking wine</li>
+          <li>1/4 cup white wine</li>
           <li>2 tbsp butter</li>
           <li>5 garlic cloves, minced</li>
-          <li>1 tbsp neutral oil (avocado recommended)</li>
+          <li>1 tbsp oil</li>
           <li>1 shallot, minced</li>
           <li>1/4 cup sun-dried tomatoes, chopped</li>
-          <li>1 tbsp sun-dried tomato oil (from the jar)</li>
-          <li>3/4 cup heavy cream (or half & half), room temp</li>
-          <li>Fresh chopped parsley, for garnish</li>
+          <li>1 tbsp sun-dried tomato oil</li>
+          <li>3/4 cup heavy cream</li>
+          <li>Parsley for garnish</li>
         </ul>
-        <h3>For the Mashed Potatoes</h3>
+        <h3>For mashed potatoes</h3>
         <ul>
-          <li>3 pounds russet potatoes or Yukon Gold</li>
-          <li>1/4 cup salted butter, melted</li>
+          <li>3 lbs potatoes</li>
+          <li>1/4 cup butter</li>
           <li>5 garlic cloves</li>
-          <li>3/4 cup milk or cream</li>
-          <li>Salt, to taste</li>
+          <li>3/4 cup milk</li>
         </ul>
       </section>
       <section>
         <h2>Instructions</h2>
         <ol class="instructions">
-          <li>Remove the skin from your salmon if applicable then cube the fillets into large bite-sized pieces — think forkable, not finger food. Pat them dry (super important for browning), toss with olive oil, and coat them in paprika, garlic powder, seasoning salt, Italian seasoning, and black pepper.</li>
-          <li>Heat neutral oil in a large skillet over medium heat. Once hot, add the salmon cubes. Cook for about 4 minutes per side until golden and sizzling. Reduce heat to medium-low, toss in butter and garlic, and gently sauté for 2–3 minutes until fragrant.</li>
-          <li>Still using the same pan, deglaze with white cooking wine — scraping up the garlicky goodness stuck to the bottom. Add minced shallot and caramelize for 3–4 minutes, stirring often like it’s your side hustle.</li>
-          <li>Add chopped sun-dried tomatoes and a tablespoon of that flavorful oil from the jar. Let that mingle for 2 minutes, then slowly pour in the heavy cream. Stir and bring to a light simmer. Reduce heat to low and let it thicken for 4–5 minutes.</li>
-          <li>Prepare mashed potatoes: peel then quarter the potatoes and place in a pot of cold salted water. Add the garlic cloves and bring to a boil, cooking for around 15 minutes until fork-tender. Drain and set aside. In a new pot, heat the butter and milk/cream together, bringing to a gentle simmer. Use a ricer or mashers to combine the potatoes and garlic with the butter mixture until smooth. Turn off heat.</li>
-          <li>To serve, spoon warm mashed potatoes onto a plate, place salmon bites on top, and ladle the sun-dried tomato cream sauce over everything. Garnish with chopped parsley if desired.</li>
+          <li>Cube and season salmon, sear in pan.</li>
+          <li>Cook onions, add garlic, sun-dried tomatoes, cream, simmer.</li>
+          <li>Prepare mashed potatoes.</li>
+          <li>Serve salmon on mash, with sauce.</li>
         </ol>
       </section>
-      <div class="footer">Enjoy your delicious and modern homemade salmon dish!</div>
+      <div class="footer">Enjoy your dish!</div>
     </div>`;
   } else if (recipeId === 'recipe2') {
-    container.innerHTML = `
+    document.getElementById('main-container').innerHTML = `
     <div class="recipe-card" id="recipe-card">
       <h1>Baked Potato Soup</h1>
       <div class="image-container">
         <img src="https://www.cookingclassy.com/wp-content/uploads/2024/02/baked-potato-soup-09.jpg" alt="Baked Potato Soup" class="recipe-image" />
       </div>
-      <div class="btn-container">
-        <button id="exportPdf">Export to PDF</button>
-      </div>
+      <div class="btn-container"><button id="exportPdf">Export to PDF</button></div>
       <section>
         <h2>Ingredients</h2>
         <ul>
-          <li>6 slices of bacon</li>
+          <li>6 bacon slices</li>
           <li>1 tbsp cajun seasoning</li>
           <li>1 tbsp brown sugar</li>
           <li>2 tbsp butter</li>
-          <li>6 garlic cloves, minced</li>
-          <li>1 large yellow onion, diced</li>
-          <li>1/3 cup all-purpose flour</li>
-          <li>2 lb of golden potatoes (900 g), peeled & cubed into 1-inch pieces</li>
+          <li>6 garlic cloves</li>
+          <li>1 onion</li>
+          <li>1/3 cup flour</li>
+          <li>2 lbs potatoes</li>
           <li>2 cups milk</li>
-          <li>1 cup heavy cream</li>
-          <li>3.5 cups chicken stock/broth</li>
-          <li>Onion seasoning: 2 tsp paprika, 1 tsp chili flakes, 2 tsp salt, 2 tsp black pepper</li>
-          <li>1 cup aged or sharp cheddar cheese</li>
-          <li>3/4 cup parmesan cheese, grated</li>
-          <li>2/3 cup sour cream</li>
-          <li>Thinly chopped fresh chives, for garnish</li>
+          <li>1 cup cream</li>
+          <li>3.5 cups broth</li>
+          <li>Cheddar, sour cream, chives</li>
         </ul>
       </section>
       <section>
         <h2>Instructions</h2>
         <ol class="instructions">
-          <li>Season the bacon slices with cajun, then cook in a Dutch oven or large pot over medium heat until crispy. Remove bacon, set aside, and leave the rendered fat.</li>
-          <li>Add diced onion to the pot, cook 5-7 min until translucent. Add onion seasonings and garlic, cook 2 more min.</li>
-          <li>Add butter, then sprinkle in flour, whisk until smooth.</li>
-          <li>Add chicken broth, milk, heavy cream, and potatoes. Bring to a simmer and cook 10-15 min until potatoes are fork-tender.</li>
-          <li>Use a hand blender to blend some of the soup to thicken, leaving chunks. Or blend half in a blender.</li>
-          <li>Chop the bacon, add back to the soup along with sour cream, cheddar, parmesan. Stir and simmer 10-20 min.</li>
-          <li>Garnish with bacon bits, cheese, sour cream, and chives.</li>
+          <li>Cook bacon, sauté onions & garlic, add flour, broth, potatoes, cook until tender.</li>
+          <li>Blend some or all for thickness. Add bacon, cheese, sour cream, chives.</li>
         </ol>
       </section>
-      <div class="footer">Enjoy your hearty baked potato soup!</div>
+      <div class="footer">Enjoy!</div>
     </div>`;
   } else if (recipeId === 'recipe3') {
-    container.innerHTML = `
+    document.getElementById('main-container').innerHTML = `
     <div class="recipe-card" id="recipe-card">
       <h1>Garlic Chili Onion Pasta</h1>
       <div class="image-container">
         <img src="https://assets.epicurious.com/photos/5cb8bce9b6addb519525d1b2/1:1/w_2560%2Cc_limit/Caramelized-Onion-Pasta-recipe-100419.jpg" alt="Garlic Chili Onion Pasta" class="recipe-image" />
       </div>
-      <div class="btn-container">
-        <button id="exportPdf">Export to PDF</button>
-      </div>
+      <div class="btn-container"><button id="exportPdf">Export to PDF</button></div>
       <section>
         <h2>Ingredients</h2>
         <ul>
-          <li>1 large onion, thinly sliced</li>
-          <li>4 cloves of garlic, minced, plus more for garlic chili crisp</li>
-          <li>2 tablespoons of garlic chili crisp, plus more for serving (I use @ramanokram’s garlic chilli oil - so good)</li>
-          <li>Salt and pepper, to taste</li>
-          <li>1 cup of coconut milk or cream</li>
-          <li>1 teaspoon of dry parsley</li>
-          <li>8 ounces of pasta (your choice of shape)</li>
-          <li>Olive oil</li>
+          <li>1 large onion, sliced</li>
+          <li>4 garlic cloves, minced (plus more for chili)</li>
+          <li>2 tbsp garlic chili crisp</li>
+          <li>Salt, pepper</li>
+          <li>1 cup coconut milk</li>
+          <li>1 tsp parsley</li>
+          <li>8 oz pasta</li>
         </ul>
       </section>
       <section>
         <h2>Instructions</h2>
         <ol class="instructions">
-          <li>Start by preparing all your ingredients. Thinly slice the onion, mince the garlic, and measure out your garlic chili crisp, coconut milk or cream, and dry parsley. Set aside.</li>
-          <li>In a large skillet over medium heat, add a couple of tablespoons of olive oil. Once the oil is hot, add the sliced onions with a pinch of salt. Cook, stirring occasionally, for 10-15 minutes or until the onions are golden brown and caramelized. If the onions start to stick, you can add a little water to the pan to help deglaze it.</li>
-          <li>While the onions are caramelizing, bring a large pot of salted water to a boil. Add the pasta and cook according to package instructions until al dente. Drain and set aside, reserving some of the pasta water for later.</li>
-          <li>Once the onions are caramelized, add the minced garlic to the skillet. Cook for about 1 minute or until fragrant. Then, stir in the garlic chili crisp, along with an optional tablespoon of soy sauce and cook for another minute. Pour in the coconut milk or cream, add the dry parsley, and season with salt and pepper to taste. Let the sauce simmer for a few minutes to thicken slightly.</li>
-          <li>Add the cooked pasta to the skillet with the sauce, tossing to combine. If the sauce is too thick, add a bit of the reserved pasta water until you reach your desired consistency.</li>
-          <li>Serve the pasta hot, topped with an extra spoonful of garlic chili crisp for those who enjoy a bit more heat. You can also sprinkle some parsley on top for a hint of color. Enjoy!</li>
+          <li>Cook onions until caramelized, add garlic, chili oil, coconut milk, simmer.</li>
+          <li>Cook pasta, toss with sauce, garnish.</li>
         </ol>
       </section>
-      <div class="footer">Enjoy your delicious Garlic Chili Onion Pasta!</div>
+      <div class="footer">Enjoy!</div>
+    </div>`;
+  } else if (recipeId === 'recipe4') {
+    // Recipe 4 detailed
+    document.getElementById('main-container').innerHTML = `
+    <div class="recipe-card" id="recipe-card">
+      <h1>Homemade Big Mac Tacos</h1>
+      <div class="image-container">
+        <img src="https://gimmedelicious.com/wp-content/uploads/2024/06/Smash-Burger-Tacos-5.jpg" alt="Big Mac Tacos" class="recipe-image" />
+      </div>
+      <div class="btn-container"><button id="exportPdf">Export to PDF</button></div>
+      <section>
+        <h2>Ingredients</h2>
+        <ul>
+          <li>8 oz lean ground beef</li>
+          <li>4 small flour tortillas</li>
+          <li>2 large yellow onions, sliced</li>
+          <li>Salt & pepper</li>
+          <li>4 slices cheddar cheese</li>
+          <li>2 tbsp butter</li>
+          <li>Shredded lettuce</li>
+          <li>Pickles</li>
+          <li>For Big Mac sauce: mayonnaise, pickles, mustard, ketchup, garlic powder, onion powder, paprika, salt, onion, vinegar</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Instructions</h2>
+        <ol class="instructions">
+          <li>Caramelize onions. Form beef patties, sear, add cheese.</li>
+          <li>Mix sauce ingredients.</li>
+          <li>Assemble tacos with toppings and sauce.</li>
+        </ol>
+      </section>
+      <div class="footer">Enjoy!</div>
+    </div>`;
+  } else if (recipeId === 'recipe5') {
+    // Recipe 5 detailed
+    document.getElementById('main-container').innerHTML = `
+    <div class="recipe-card" id="recipe-card">
+      <h1>Salmon with Honey Cajun Seasoning</h1>
+      <div class="image-container">
+        <img src="https://www.jocooks.com/wp-content/uploads/2024/05/cajun-honey-butter-salmon-1-20.jpg" alt="Cajun Honey Salmon" class="recipe-image" />
+      </div>
+      <div class="btn-container"><button id="exportPdf">Export to PDF</button></div>
+      <section>
+        <h2>Ingredients</h2>
+        <ul>
+          <li>15oz salmon (425g)</li>
+          <li>2 tsp salt</li>
+          <li>2 tsp black pepper</li>
+          <li>4 tsp cajun seasoning</li>
+          <li>Olive oil</li>
+          <li>3 tbsp butter</li>
+          <li>1 tbsp parsley, chopped</li>
+          <li>3 garlic cloves, minced</li>
+          <li>2 tsp honey</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Instructions</h2>
+        <ol class="instructions">
+          <li>Pat dry fish. Rub with oil, season with salt, pepper, cajun.</li>
+          <li>Cook in air fryer at 400°F for 9 min or oven 12-15 min.</li>
+          <li>Melt butter, add garlic, honey, parsley, cook 2 min.</li>
+          <li>Baste salmon with sauce, serve over mash or rice.</li>
+        </ol>
+      </section>
+      <div class="footer">Enjoy your salmon!</div>
+    </div>`;
+  } else if (recipeId === 'recipe6') {
+    // Recipe 6 detailed
+    document.getElementById('main-container').innerHTML = `
+    <div class="recipe-card" id="recipe-card">
+      <h1>Beef Short Ribs Braised in Red Wine</h1>
+      <div class="image-container">
+        <img src="https://wishbonekitchen.com/wp-content/uploads/2022/11/Screen-Shot-2022-04-01-at-11.14.03-AM-736x1024.png" alt="Beef Short Ribs" class="recipe-image" />
+      </div>
+      <div class="btn-container"><button id="exportPdf">Export to PDF</button></div>
+      <section>
+        <h2>Ingredients</h2>
+        <ul>
+          <li>5lb (2.2kg) bone-in beef short ribs</li>
+          <li>Neutral oil (for searing)</li>
+          <li>3 cups yellow onions, diced</li>
+          <li>3 cups carrots, diced</li>
+          <li>3 cups celery, diced</li>
+          <li>6 garlic cloves, minced</li>
+          <li>Olive oil</li>
+          <li>3 tbsp tomato paste</li>
+          <li>1/2 tbsp beef bouillon paste</li>
+          <li>2 cups dry red wine</li>
+          <li>2 cups beef stock</li>
+          <li>4-5 fresh thyme sprigs</li>
+          <li>3 bay leaves</li>
+          <li>Chives, for garnish</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Instructions</h2>
+        <ol class="instructions">
+          <li>Preheat oven to 275°F (135°C). Rub ribs with oil and salt, cure 20 min.</li>
+          <li>Brown in Dutch oven, set aside.</li>
+          <li>Sauté vegetables 15 min, add garlic, tomato paste, broth & wine. Add herbs, simmer.</li>
+          <li>Braise 3.5-5 hrs, then strain and refrigerate overnight if desired.</li>
+          <li>Reheat in sauce, serve.</li>
+        </ol>
+      </section>
+      <div class="footer">Enjoy your braised short ribs!</div>
     </div>`;
   } else {
-    container.innerHTML = `
+    document.getElementById('main-container').innerHTML = `
     <div class="recipe-card" id="recipe-card">
       <h1>Recipe Not Found</h1>
       <p style="text-align:center;">Please add content for ${recipeId}.</p>
     </div>`;
   }
   attachPdfEvent();
+}
+
+// =================== PDF export ===================
+function attachPdfEvent() {
+  const btn = document.getElementById('exportPdf');
+  if (btn) {
+    btn.onclick = () => {
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF();
+      const element = document.getElementById('recipe-card');
+      html2canvas(element, { scale: 2 }).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfWidth = 210;
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save('Recipe.pdf');
+      });
+    };
+  }
+}
+
+// Random quote generator
+function getRandomQuote() {
+  return quotes[Math.floor(Math.random() * quotes.length)];
 }
 </script>
 </body>
