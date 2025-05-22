@@ -1,199 +1,302 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            background-color: #f5f5f5;
-        }
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        #dashboard-wrapper {
-            width: 100%;
-            max-width: 1200px;
-            margin-bottom: 20px;
-        }
-        .dashboard {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-        }
-        .column {
-            flex: 1 1 30%;
-            margin: 10px;
-            padding: 20px;
-            background-color: #99d3c5;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .in-progress {
-            background-color: #01916D;
-        }
-        .complete {
-            background-color: #214C42;
-        }
-        .column h2 {
-            margin-bottom: 10px;
-        }
-        .column ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        .column li {
-            padding: 10px;
-            background-color: #e0f7fa;
-            margin-bottom: 5px;
-            border-radius: 5px;
-            position: relative;
-        }
-        .filter-form {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .filter-form input, .filter-form select {
-            padding: 10px;
-            margin: 5px;
-            border-radius: 5px;
-            border: 1px solid #999;
-        }
-        .input-form {
-            width: 100%;
-            max-width: 800px;
-            background-color: #ffffff;
-            padding: 20px;
-            margin-top: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        .input-form input, .input-form select, .input-form button {
-            width: calc(33.33% - 10px);
-            padding: 10px;
-            margin: 5px;
-            border-radius: 5px;
-            border: 1px solid #999;
-        }
-        .log {
-            max-height: 200px;
-            overflow-y: auto;
-            background-color: #eef;
-            margin-top: 20px;
-            padding: 10px;
-            border-radius: 8px;
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>My Recipe Collection</title>
+<!-- Google Fonts for a modern look -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet" />
+<style>
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding-top: 60px; /* space for title bar */
+    color: #333;
+  }
+  /* Title Bar Styles */
+  .title-bar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #2c3e50;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    z-index: 999;
+  }
+  .title-bar h1 {
+    margin: 0;
+    font-size: 1.8em;
+    color: #fff;
+    flex: 1;
+  }
+  /* Dropdown styles */
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  .dropbtn {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 16px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .dropbtn:hover {
+    background-color: #2980b9;
+  }
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 40px;
+    background-color: #fff;
+    min-width: 200px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    overflow: hidden;
+    z-index: 1000;
+  }
+  .dropdown-content a {
+    display: block;
+    padding: 12px 16px;
+    text-decoration: none;
+    color: #333;
+  }
+  .dropdown-content a:hover {
+    background-color: #f1f1f1;
+  }
+  /* Show dropdown on hover */
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+  /* Main content styles */
+  .content {
+    padding: 20px;
+  }
+  /* Recipe card styles */
+  .recipe-card {
+    max-width: 800px;
+    margin: auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    padding: 30px;
+  }
+  h1 {
+    text-align: center;
+    font-size: 2.2em;
+    margin-bottom: 10px;
+    color: #2c3e50;
+  }
+  /* Image styling with max width 500px */
+  .image-container {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .recipe-image {
+    max-width: 500px;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  .btn-container {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    margin: 5px;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  button:hover {
+    background-color: #2980b9;
+  }
+  section {
+    margin-bottom: 30px;
+  }
+  h2 {
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+    font-size: 1.4em;
+    color: #34495e;
+  }
+  ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+  .instructions {
+    line-height: 1.6;
+  }
+  /* Footer style */
+  .footer {
+    text-align: center;
+    font-size: 0.9em;
+    color: #777;
+    margin-top: 40px;
+  }
+</style>
 </head>
 <body>
-    <div class="container">
-        <div id="dashboard-wrapper">
-            <div class="filter-form">
-                <select id="filter-status">
-                    <option value="" disabled selected>Filter by Bucket</option>
-                    <option value="not-started">Not Started</option>
-                    <option value="in-progress">In Progress</option>
-                    <option value="complete">Complete</option>
-                </select>
-                <input type="text" id="filter-assignee" placeholder="Filter by Assignee">
-                <button onclick="filterTasks()">Apply Filter</button>
-            </div>
-            <div class="dashboard">
-                <div class="column">
-                    <h2>Not Started</h2>
-                    <ul id="not-started-list">
-                        <!-- Task items will be added here -->
-                    </ul>
-                </div>
-                <div class="column in-progress">
-                    <h2>In Progress</h2>
-                    <ul id="in-progress-list">
-                        <!-- Task items will be added here -->
-                    </ul>
-                </div>
-                <div class="column complete">
-                    <h2>Complete</h2>
-                    <ul id="complete-list">
-                        <!-- Task items will be added here -->
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="input-form">
-            <form id="task-form">
-                <select id="task-status" required>
-                    <option value="" disabled selected>Select Bucket</option>
-                    <option value="not-started">Not Started</option>
-                    <option value="in-progress">In Progress</option>
-                    <option value="complete">Complete</option>
-                </select>
-                <input type="text" id="task-action" placeholder="Action Item" required>
-                <input type="text" id="task-assignee" placeholder="Assigned To" required>
-                <button type="submit">Submit Task</button>
-            </form>
-        </div>
-        <div class="log" id="activity-log"></div>
+
+<!-- Title bar with dropdown menu -->
+<div class="title-bar">
+  <h1>My Recipe Collection</h1>
+  <div class="dropdown">
+    <button class="dropbtn">My Recipes</button>
+    <div class="dropdown-content" id="recipe-list">
+      <a href="#" onclick="loadRecipe('recipe1')">Recipe 1</a>
+      <a href="#" onclick="loadRecipe('recipe2')">Recipe 2</a>
+      <a href="#" onclick="loadRecipe('recipe3')">Recipe 3</a>
+      <a href="#" onclick="loadRecipe('recipe4')">Recipe 4</a>
+      <a href="#" onclick="loadRecipe('recipe5')">Recipe 5</a>
+      <a href="#" onclick="loadRecipe('recipe6')">Recipe 6</a>
+      <a href="#" onclick="loadRecipe('recipe7')">Recipe 7</a>
+      <a href="#" onclick="loadRecipe('recipe8')">Recipe 8</a>
+      <a href="#" onclick="loadRecipe('recipe9')">Recipe 9</a>
+      <a href="#" onclick="loadRecipe('recipe10')">Recipe 10</a>
     </div>
-    <script>
-        const tasks = [];
-        const activityLog = document.getElementById('activity-log');
+  </div>
+</div>
 
-        document.getElementById('task-form').addEventListener('submit', function(event){
-            event.preventDefault();
-            const status = document.getElementById('task-status').value;
-            const action = document.getElementById('task-action').value;
-            const assignee = document.getElementById('task-assignee').value;
+<!-- Main content area -->
+<div class="content" id="recipe-container">
+  <!-- Default message -->
+  <div class="recipe-card" id="recipe-card">
+    <h1>Welcome!</h1>
+    <p style="text-align:center;">Select a recipe from the dropdown menu above.</p>
+  </div>
+</div>
 
-            const newTask = document.createElement('li');
-            newTask.textContent = `${action} - ${assignee}`;
-            tasks.push({ status, action, assignee });
+<!-- Scripts for PDF export and dynamic loading -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+  // Function to load a recipe based on id
+  function loadRecipe(recipeId) {
+    const container = document.getElementById('recipe-container');
+    container.innerHTML = '';
 
-            appendTaskToList(status, newTask);
-            addActivityLog(`Added: ${action} - ${assignee} to ${status}`);
+    if (recipeId === 'recipe1') {
+      container.innerHTML = `
+      <div class="recipe-card" id="recipe-card">
+        <h1>Salmon with Sun-Dried Tomato Cream Sauce</h1>
+        <div class="image-container">
+          <img src="https://wellnessbykay.com/wp-content/uploads/2024/05/marry-me-salmon-recipe.jpg" alt="Salmon Dish" class="recipe-image" />
+        </div>
+        <div class="btn-container">
+          <button id="exportPdf">Export to PDF</button>
+        </div>
+        <section>
+          <h2>Ingredients</h2>
+          <h3>Salmon</h3>
+          <ul>
+            <li>0.8 lbs (400g) fresh salmon, cubed</li>
+            <li>1 tbsp olive oil</li>
+            <li>2 tsp paprika</li>
+            <li>1 tsp garlic powder</li>
+            <li>1 tsp seasoning salt (or fish seasoning)</li>
+            <li>1 tsp Italian seasoning</li>
+            <li>1 tsp black pepper</li>
+            <li>1/4 cup white cooking wine</li>
+            <li>2 tbsp butter</li>
+            <li>5 garlic cloves, minced</li>
+            <li>1 tbsp neutral oil (avocado recommended)</li>
+            <li>1 shallot, minced</li>
+            <li>1/4 cup sun-dried tomatoes, chopped</li>
+            <li>1 tbsp sun-dried tomato oil (from the jar)</li>
+            <li>3/4 cup heavy cream (or half & half), room temp</li>
+            <li>Fresh chopped parsley, for garnish</li>
+          </ul>
+          <h3>For the Mashed Potatoes</h3>
+          <ul>
+            <li>3 pounds russet potatoes or Yukon Gold</li>
+            <li>1/4 cup salted butter, melted</li>
+            <li>5 garlic cloves</li>
+            <li>3/4 cup milk or cream</li>
+            <li>Salt, to taste</li>
+          </ul>
+        </section>
+        <section>
+          <h2>Instructions</h2>
+          <ol class="instructions">
+            <li>Remove the skin from your salmon if applicable then cube the fillets into large bite-sized pieces — think forkable, not finger food. Pat them dry (super important for browning), toss with olive oil, and coat them in paprika, garlic powder, seasoning salt, Italian seasoning, and black pepper.</li>
+            <li>Heat neutral oil in a large skillet over medium heat. Once hot, add the salmon cubes. Cook for about 4 minutes per side until golden and sizzling. Reduce heat to medium-low, toss in butter and garlic, and gently sauté for 2–3 minutes until fragrant.</li>
+            <li>Still using the same pan, deglaze with white cooking wine — scraping up the garlicky goodness stuck to the bottom. Add minced shallot and caramelize for 3–4 minutes, stirring often like it’s your side hustle.</li>
+            <li>Add chopped sun-dried tomatoes and a tablespoon of that flavorful oil from the jar. Let that mingle for 2 minutes, then slowly pour in the heavy cream. Stir and bring to a light simmer. Reduce heat to low and let it thicken for 4–5 minutes.</li>
+            <li>Prepare mashed potatoes: peel then quarter the potatoes and place in a pot of cold salted water. Add the garlic cloves and bring to a boil, cooking for around 15 minutes until fork-tender. Drain and set aside. In a new pot, heat the butter and milk/cream together, bringing to a gentle simmer. Use a ricer or mashers to combine the potatoes and garlic with the butter mixture until smooth. Turn off heat.</li>
+            <li>To serve, spoon warm mashed potatoes onto a plate, place salmon bites on top, and ladle the sun-dried tomato cream sauce over everything. Garnish with chopped parsley if desired.</li>
+          </ol>
+        </section>
+        <div class="footer">Enjoy your delicious and modern homemade salmon dish!</div>
+      </div>`;
+    } else if (recipeId === 'recipe2') {
+      container.innerHTML = `
+      <div class="recipe-card" id="recipe-card">
+        <h1>Placeholder Recipe 2</h1>
+        <div class="image-container">
+          <img src="https://via.placeholder.com/500x300?text=Recipe+2" alt="Recipe 2" class="recipe-image" />
+        </div>
+        <div class="btn-container">
+          <button id="exportPdf">Export to PDF</button>
+        </div>
+        <p style="text-align:center;">Add your recipe details here.</p>
+        <div class="footer">Enjoy your recipe!</div>
+      </div>`;
+    } else {
+      // Placeholder for other recipes
+      container.innerHTML = `
+      <div class="recipe-card" id="recipe-card">
+        <h1>Recipe Not Found</h1>
+        <p style="text-align:center;">Please add content for ${recipeId}.</p>
+      </div>`;
+    }
+    // Attach PDF event listener for new recipe
+    attachPdfEvent();
+  }
 
-            document.getElementById('task-form').reset();
+  // Function to attach PDF export event
+  function attachPdfEvent() {
+    const btn = document.getElementById('exportPdf');
+    if (btn) {
+      btn.onclick = () => {
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF();
+        const element = document.getElementById('recipe-card');
+        html2canvas(element, { scale: 2 }).then(canvas => {
+          const imgData = canvas.toDataURL('image/png');
+          const imgProps = pdf.getImageProperties(imgData);
+          const pdfWidth = 210; // A4 width in mm
+          const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+          pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+          pdf.save('Recipe.pdf');
         });
+      };
+    }
+  }
 
-        function appendTaskToList(status, taskElement) {
-            if(status === 'not-started') {
-                document.getElementById('not-started-list').appendChild(taskElement);
-            } else if(status === 'in-progress') {
-                document.getElementById('in-progress-list').appendChild(taskElement);
-            } else if(status === 'complete') {
-                document.getElementById('complete-list').appendChild(taskElement);
-            }
-        }
+  // Load default content and attach event on page load
+  document.addEventListener('DOMContentLoaded', () => {
+    // Load default message
+    loadRecipe('default');
+  });
+</script>
 
-        function addActivityLog(logMessage) {
-            const logEntry = document.createElement('div');
-            logEntry.textContent = logMessage;
-            activityLog.appendChild(logEntry);
-        }
-
-        function filterTasks() {
-            const filterStatus = document.getElementById('filter-status').value;
-            const filterAssignee = document.getElementById('filter-assignee').value.toLowerCase();
-
-            document.querySelectorAll('.dashboard .column ul').forEach((list) => list.innerHTML = '');
-
-            tasks.forEach(({status, action, assignee}) => {
-                if ((filterStatus === '' || filterStatus === status) &&
-                    (filterAssignee === '' || assignee.toLowerCase().includes(filterAssignee))) {
-                    const newTask = document.createElement('li');
-                    newTask.textContent = `${action} - ${assignee}`;
-                    appendTaskToList(status, newTask);
-                }
-            });
-        }
-    </script>
 </body>
 </html>
