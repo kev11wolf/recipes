@@ -73,6 +73,7 @@
     min-width: 200px;
     border-radius: 5px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    z-index: 1000;
   }
   .dropdown:hover .dropdown-content {
     display: block;
@@ -232,16 +233,17 @@ li {
   </div>
 </div>
 
-<!-- Main container with arrows -->
+<!-- Main container with slideshow and quote -->
 <div id="main-container">
   <div id="slideshow">
     <img id="slide-image" src="" alt="Slideshow" />
   </div>
   <div id="quote"></div>
-  <!-- Navigation arrows -->
-  <div id="left-arrow" class="arrow">←</div>
-  <div id="right-arrow" class="arrow">→</div>
 </div>
+
+<!-- Navigation arrows always present outside -->
+<div id="left-arrow" class="arrow">←</div>
+<div id="right-arrow" class="arrow">→</div>
 
 <!-- Scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -260,12 +262,57 @@ const quotes = [
   "Cooking is at once child's play and adult joy. And cooking done with care is an act of love. - Craig Claiborne",
   "Cooking is like painting or writing a song. Just as there are only so many notes or colors, there are only so many flavors—it's how you combine them that sets you apart. - Wolfgang Puck",
   "The kitchen is the heart of the home. - Unknown",
-  // ... (additional quotes if needed)
+  "You don’t have to cook fancy or complicated masterpieces — just good food from fresh ingredients. - Julia Child",
+  "Cooking is an expression of love. - Jean-Georges Vongerichten",
+  "A balanced diet is a cookie in each hand. - Barbara Johnson",
+  "Cooking is the ultimate giving. - Jamie Oliver",
+  "The best way to learn to cook is to do it with someone you love. - Unknown",
+  "Life is uncertain. Eat dessert first. - Ernestine Ulmer",
+  "Cooking is an act of love, a gift of nourishment and comfort. - Unknown",
+  "A good cook is like a sorcerer who dispenses happiness. - Unknown",
+  "If you want to cook well, begin with a good attitude. - Julia Child",
+  "Cooking is a form of self-expression. - Unknown",
+  "Food is symbolic of love when words are inadequate. - Alan D. Wolfelt",
+  "Cooking is the most beautiful thing you can do with your family. - Unknown",
+  "The only thing I like better than talking about food is eating it. - John Walters",
+  "Cooking is the art of adjustment. - Jacques Pepin",
+  "The kitchen is a laboratory for experimenting with love and flavor. - Unknown",
+  "Food is not just fuel, it's information. It talks to your DNA and tells it what to do. - Dr. Mark Hyman",
+  "Cooking is like a journey; enjoy every step. - Unknown",
+  "There's no sincerer love than the love of food. - George Bernard Shaw",
+  "Cooking is the ultimate act of love and creativity. - Unknown",
+  "Great cooking is about harnessing more than just recipes; it's about creating memories. - Unknown",
+  "A recipe is a story that ends with a good meal. - Laurie Colwin",
+  "Cooking is a way to find happiness in the simple things. - Unknown",
+  "The best meals are those shared with loved ones. - Unknown",
+  "Cooking with love provides food for the soul. - Rachael Ray",
+  "Good food is good mood. - Unknown",
+  "Cooking is the ultimate way to show you care. - Unknown",
+  "The secret ingredient is always love. - Unknown",
+  "Cooking is a language everyone understands. - Unknown",
+  "A good cook is like a good storyteller. - Unknown",
+  "Cooking is an act of love, patience, and dedication. - Unknown",
+  "Great food, great mood. - Unknown",
+  "In the end, food is all about love. - Unknown",
+  "Cooking is an adventure; enjoy the ride. - Unknown",
+  "The art of cooking is the art of love. - Unknown",
+  "Cooking is a dance; find your rhythm. - Unknown",
+  "A recipe has no soul. You, as the cook, must bring the soul. - Unknown",
+  "Happiness is homemade. - Unknown",
+  "Cooking is the art of transforming simple ingredients into magic. - Unknown",
+  "Food is the ingredient that binds us. - Unknown",
+  "Cooking is the ultimate form of self-care. - Unknown",
+  "Every meal is a story waiting to be told. - Unknown",
+  "Cooking is the poetry of the kitchen. - Unknown",
+  "A good meal is an experience, not just food. - Unknown",
+  "The kitchen is where magic begins. - Unknown",
+  "Cooking is a gift you give to others. - Unknown",
+  "Mastering the art of cooking is mastering the art of love. - Unknown"
 ];
 
 // =================== Slideshow & quote ===================
 const images = [
-  "https://www.foodandwine.com/thmb/fjNakOY7IcuvZac1rR3JcSo7vzI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/FAW-recipes-pasta-sausage-basil-and-mustard-hero-06-cfd1c0a2989e474ea7e574a38182bbee.jpg",
+  "https://www.foodandwine.com/thmb/8GTutX3bt_s__nurCmEP_zis9cM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Beer-Battered-Fish-Tacos-FT-RECIPE0522-ce3d88a65d68413784cf524dc5784115.jpg",
   "https://www.foodandwine.com/thmb/2rPeNfC5SBMLPdqeY45IQjVj0bQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/garlicky-braised-lamb-shanks-with-sweet-peppers-XL-RECIPE0918-1213bf958ab544208a26f6a8ed0af4c7.jpg",
   "https://www.foodandwine.com/thmb/8-reBEkSSD3PPW2XAUJTW_k6VIs=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Adobo-Chicken-Wings-FT-RECIPE0722-16280904bb054deca32db1d3a7dd4fe0.jpg",
   "https://www.simplyrecipes.com/thmb/FRlM2EEuix3dh1WxFD2R_Gp-V4c=/1500x0/filters:no_upscale():max_bytes(150000)/strip_icc()/Simply-Recipes-Most-Popular-Recipes-Feature-LEAD-04-b4cc7e7bcfbe486586053a8e0a927d2f.jpg"
@@ -285,10 +332,11 @@ function startSlideshow() {
   }, 3000);
 }
 
-// =================== Initialization ===================
+// =================== Recipes ===================
 const recipes = ['recipe1','recipe2','recipe3','recipe4','recipe5','recipe6'];
 let currentRecipeIndex = 0;
 
+// =================== Initialization ===================
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize quote
   document.getElementById('quote').textContent = getRandomQuote();
@@ -298,29 +346,35 @@ document.addEventListener('DOMContentLoaded', () => {
   // Show arrows
   document.getElementById('left-arrow').style.display = 'block';
   document.getElementById('right-arrow').style.display = 'block';
+
+  // Attach arrow event handlers (do once)
+  document.getElementById('left-arrow').addEventListener('click', () => {
+    clearInterval(slideInterval);
+    currentRecipeIndex = (currentRecipeIndex - 1 + recipes.length) % recipes.length;
+    loadRecipe(recipes[currentRecipeIndex]);
+  });
+  document.getElementById('right-arrow').addEventListener('click', () => {
+    clearInterval(slideInterval);
+    currentRecipeIndex = (currentRecipeIndex + 1) % recipes.length;
+    loadRecipe(recipes[currentRecipeIndex]);
+  });
 });
 
 // =================== Reset home ===================
 function resetHome() {
-  // Stop slideshow
   clearInterval(slideInterval);
-  // Reset main container content
   document.getElementById('main-container').innerHTML = `
     <div id="slideshow">
       <img id="slide-image" src="" alt="Slideshow" />
     </div>
-    <div id="quote"></div>
-    <div id="left-arrow" class="arrow">←</div>
-    <div id="right-arrow" class="arrow">→</div>`;
-  // Reinitialize slideshow
+    <div id="quote"></div>`;
+  // Reinitialize slideshow and quote
   showSlide(slideIndex);
-  startSlideshow();
-  // Re-set quote
   document.getElementById('quote').textContent = getRandomQuote();
-  // Show arrows
+  startSlideshow();
+  // Keep arrows visible
   document.getElementById('left-arrow').style.display = 'block';
   document.getElementById('right-arrow').style.display = 'block';
-  // Reset recipe index
   currentRecipeIndex = 0;
 }
 
@@ -330,27 +384,12 @@ document.getElementById('home-logo').addEventListener('click', (e) => {
   resetHome();
 });
 
-// =================== Arrow navigation ===================
-document.getElementById('left-arrow').onclick = () => {
-  // Stop slideshow when cycling recipes
-  clearInterval(slideInterval);
-  // Cycle to previous recipe
-  currentRecipeIndex = (currentRecipeIndex - 1 + recipes.length) % recipes.length;
-  loadRecipe(recipes[currentRecipeIndex]);
-};
-document.getElementById('right-arrow').onclick = () => {
-  clearInterval(slideInterval);
-  currentRecipeIndex = (currentRecipeIndex + 1) % recipes.length;
-  loadRecipe(recipes[currentRecipeIndex]);
-};
-
 // =================== Load recipe function ===================
 function loadRecipe(recipeId) {
-  // Stop slideshow when viewing recipe
+  // Stop slideshow
   clearInterval(slideInterval);
-  // Update currentRecipeIndex based on recipeId
+  // Find index
   currentRecipeIndex = recipes.indexOf(recipeId);
-  // Load recipe content
   if (recipeId === 'recipe1') {
     document.getElementById('main-container').innerHTML = `
     <div class="recipe-card" id="recipe-card">
@@ -462,7 +501,6 @@ function loadRecipe(recipeId) {
       <div class="footer">Enjoy!</div>
     </div>`;
   } else if (recipeId === 'recipe4') {
-    // Recipe 4 detailed
     document.getElementById('main-container').innerHTML = `
     <div class="recipe-card" id="recipe-card">
       <h1>Homemade Big Mac Tacos</h1>
@@ -495,7 +533,6 @@ function loadRecipe(recipeId) {
       <div class="footer">Enjoy!</div>
     </div>`;
   } else if (recipeId === 'recipe5') {
-    // Recipe 5 detailed
     document.getElementById('main-container').innerHTML = `
     <div class="recipe-card" id="recipe-card">
       <h1>Salmon with Honey Cajun Seasoning</h1>
@@ -529,7 +566,6 @@ function loadRecipe(recipeId) {
       <div class="footer">Enjoy your salmon!</div>
     </div>`;
   } else if (recipeId === 'recipe6') {
-    // Recipe 6 detailed
     document.getElementById('main-container').innerHTML = `
     <div class="recipe-card" id="recipe-card">
       <h1>Beef Short Ribs Braised in Red Wine</h1>
