@@ -4,43 +4,49 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>My Recipe Collection</title>
-<!-- Google Fonts for a modern look -->
+<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet" />
 <style>
   body {
     font-family: 'Montserrat', sans-serif;
-    background-color: #f9f9f9;
     margin: 0;
-    padding-top: 60px; /* space for title bar */
+    background-color: #fafafa;
     color: #333;
   }
-  /* Title Bar Styles */
-  .title-bar {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background-color: #2c3e50;
+  /* Header: logo + title + dropdown */
+  .header {
     display: flex;
     align-items: center;
     padding: 10px 20px;
+    background-color: #2c3e50;
+    position: sticky;
+    top: 0;
     z-index: 999;
   }
-  .title-bar h1 {
-    margin: 0;
-    font-size: 1.8em;
-    color: #fff;
+  #logo {
+    max-height: 50px;
+    cursor: pointer;
+    margin-right: 15px;
+    border-radius: 5px;
+    transition: transform 0.2s;
+  }
+  #logo:hover {
+    transform: scale(1.05);
+  }
+  h1 {
     flex: 1;
+    margin: 0;
+    color: #fff;
+    font-size: 1.8em;
   }
   /* Dropdown styles */
   .dropdown {
     position: relative;
-    display: inline-block;
   }
   .dropbtn {
     background-color: #3498db;
-    color: white;
+    color: #fff;
     padding: 10px 16px;
-    font-size: 1em;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -55,10 +61,9 @@
     top: 40px;
     background-color: #fff;
     min-width: 200px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
     border-radius: 5px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
     overflow: hidden;
-    z-index: 1000;
   }
   .dropdown-content a {
     display: block;
@@ -69,101 +74,125 @@
   .dropdown-content a:hover {
     background-color: #f1f1f1;
   }
-  /* Show dropdown on hover */
+  /* Show menu on hover */
   .dropdown:hover .dropdown-content {
     display: block;
   }
-
-  /* Main content styles */
-  .content {
+  /* Main content styling */
+  #main-container {
     padding: 20px;
   }
-  /* Recipe card styles */
-  .recipe-card {
+  /* Slideshow */
+  #slideshow {
+    max-width: 100%;
+    max-height: 500px;
+    margin: 0 auto 20px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  #slideshow img {
+    width: auto;
+    max-height: 500px;
+    display: block;
+    margin: 0 auto;
+  }
+  /* Quote styling */
+  #quote {
+    font-style: italic;
+    text-align: center;
+    margin: 20px 0;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.2em;
+    padding: 0 10px;
+    color: #555;
+  }
+  /* Recipe styles (same as previous) */
+.recipe-card {
     max-width: 800px;
     margin: auto;
-    background-color: #fff;
+    background: #fff;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     padding: 30px;
-  }
-  h1 {
+}
+h1 {
     text-align: center;
     font-size: 2.2em;
     margin-bottom: 10px;
     color: #2c3e50;
-  }
-  /* Image styling with max width 500px */
-  .image-container {
+}
+.image-container {
     text-align: center;
     margin-bottom: 20px;
-  }
-  .recipe-image {
+}
+.recipe-image {
     max-width: 500px;
     width: 100%;
     height: auto;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  }
-  .btn-container {
+}
+.btn-container {
     text-align: center;
     margin-bottom: 20px;
-  }
-  button {
+}
+button {
     background-color: #3498db;
     color: #fff;
     border: none;
     padding: 12px 20px;
     margin: 5px;
     border-radius: 5px;
-    font-size: 1em;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  button:hover {
+    transition: background-color 0.3s;
+}
+button:hover {
     background-color: #2980b9;
-  }
-  section {
+}
+section {
     margin-bottom: 30px;
-  }
-  h2 {
+}
+h2 {
     border-bottom: 2px solid #ddd;
     padding-bottom: 8px;
     margin-bottom: 15px;
     font-size: 1.4em;
     color: #34495e;
-  }
-  ul {
+}
+ul {
     list-style: none;
     padding-left: 0;
-  }
-  li {
+}
+li {
     margin-bottom: 8px;
     line-height: 1.4;
-  }
-  .instructions {
+}
+.instructions {
     line-height: 1.6;
-  }
-  /* Footer style */
-  .footer {
+}
+.footer {
     text-align: center;
     font-size: 0.9em;
     color: #777;
     margin-top: 40px;
-  }
+}
 </style>
 </head>
 <body>
 
-<!-- Title bar with dropdown menu -->
-<div class="title-bar">
+<!-- Header with logo, title, dropdown -->
+<div class="header">
+  <a href="#" id="home-logo"><img src="https://cdn.dribbble.com/userupload/30984636/file/original-fbec83aebed9cb105f7bde614fd5adee.jpg?format=webp&resize=400x300&vertical=center" alt="Logo" id="logo"></a>
   <h1>My Recipe Collection</h1>
   <div class="dropdown">
     <button class="dropbtn">My Recipes</button>
     <div class="dropdown-content" id="recipe-list">
       <a href="#" onclick="loadRecipe('recipe1')">Marry Me Salmon</a>
-      <a href="#" onclick="loadRecipe('recipe2')">Recipe 2</a>
-      <a href="#" onclick="loadRecipe('recipe3')">Recipe 3</a>
+      <a href="#" onclick="loadRecipe('recipe2')">Baked Potato Soup</a>
+      <a href="#" onclick="loadRecipe('recipe3')">Garlic Chili Onion Pasta</a>
       <a href="#" onclick="loadRecipe('recipe4')">Recipe 4</a>
       <a href="#" onclick="loadRecipe('recipe5')">Recipe 5</a>
       <a href="#" onclick="loadRecipe('recipe6')">Recipe 6</a>
@@ -175,128 +204,213 @@
   </div>
 </div>
 
-<!-- Main content area -->
-<div class="content" id="recipe-container">
-  <!-- Default message -->
-  <div class="recipe-card" id="recipe-card">
-    <h1>Welcome!</h1>
-    <p style="text-align:center;">Select a recipe from the dropdown menu above.</p>
+<!-- Main container -->
+<div id="main-container">
+  <!-- Default view: slideshow + quote -->
+  <div id="slideshow">
+    <img id="slide-image" src="" alt="Slideshow Image" />
+  </div>
+  <div id="quote">
+    "Cooking is an art, but all art requires knowing the basics." — Julia Child
   </div>
 </div>
 
-<!-- Scripts for PDF export and dynamic loading -->
+<!-- Include jsPDF & html2canvas libraries -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 <script>
-  // Function to load a recipe based on id
-  function loadRecipe(recipeId) {
-    const container = document.getElementById('recipe-container');
-    container.innerHTML = '';
+const images = [
+  "https://www.foodandwine.com/thmb/fjNakOY7IcuvZac1rR3JcSo7vzI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/FAW-recipes-pasta-sausage-basil-and-mustard-hero-06-cfd1c0a2989e474ea7e574a38182bbee.jpg",
+  "https://www.foodandwine.com/thmb/2rPeNfC5SBMLPdqeY45IQjVj0bQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/garlicky-braised-lamb-shanks-with-sweet-peppers-XL-RECIPE0918-1213bf958ab544208a26f6a8ed0af4c7.jpg",
+  "https://www.foodandwine.com/thmb/8-reBEkSSD3PPW2XAUJTW_k6VIs=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Adobo-Chicken-Wings-FT-RECIPE0722-16280904bb054deca32db1d3a7dd4fe0.jpg",
+  "https://www.simplyrecipes.com/thmb/FRlM2EEuix3dh1WxFD2R_Gp-V4c=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Simply-Recipes-Most-Popular-Recipes-Feature-LEAD-04-b4cc7e7bcfbe486586053a8e0a927d2f.jpg"
+];
 
-    if (recipeId === 'recipe1') {
-      container.innerHTML = `
-      <div class="recipe-card" id="recipe-card">
-        <h1>Salmon with Sun-Dried Tomato Cream Sauce</h1>
-        <div class="image-container">
-          <img src="https://wellnessbykay.com/wp-content/uploads/2024/05/marry-me-salmon-recipe.jpg" alt="Salmon Dish" class="recipe-image" />
-        </div>
-        <div class="btn-container">
-          <button id="exportPdf">Export to PDF</button>
-        </div>
-        <section>
-          <h2>Ingredients</h2>
-          <h3>Salmon</h3>
-          <ul>
-            <li>0.8 lbs (400g) fresh salmon, cubed</li>
-            <li>1 tbsp olive oil</li>
-            <li>2 tsp paprika</li>
-            <li>1 tsp garlic powder</li>
-            <li>1 tsp seasoning salt (or fish seasoning)</li>
-            <li>1 tsp Italian seasoning</li>
-            <li>1 tsp black pepper</li>
-            <li>1/4 cup white cooking wine</li>
-            <li>2 tbsp butter</li>
-            <li>5 garlic cloves, minced</li>
-            <li>1 tbsp neutral oil (avocado recommended)</li>
-            <li>1 shallot, minced</li>
-            <li>1/4 cup sun-dried tomatoes, chopped</li>
-            <li>1 tbsp sun-dried tomato oil (from the jar)</li>
-            <li>3/4 cup heavy cream (or half & half), room temp</li>
-            <li>Fresh chopped parsley, for garnish</li>
-          </ul>
-          <h3>For the Mashed Potatoes</h3>
-          <ul>
-            <li>3 pounds russet potatoes or Yukon Gold</li>
-            <li>1/4 cup salted butter, melted</li>
-            <li>5 garlic cloves</li>
-            <li>3/4 cup milk or cream</li>
-            <li>Salt, to taste</li>
-          </ul>
-        </section>
-        <section>
-          <h2>Instructions</h2>
-          <ol class="instructions">
-            <li>Remove the skin from your salmon if applicable then cube the fillets into large bite-sized pieces — think forkable, not finger food. Pat them dry (super important for browning), toss with olive oil, and coat them in paprika, garlic powder, seasoning salt, Italian seasoning, and black pepper.</li>
-            <li>Heat neutral oil in a large skillet over medium heat. Once hot, add the salmon cubes. Cook for about 4 minutes per side until golden and sizzling. Reduce heat to medium-low, toss in butter and garlic, and gently sauté for 2–3 minutes until fragrant.</li>
-            <li>Still using the same pan, deglaze with white cooking wine — scraping up the garlicky goodness stuck to the bottom. Add minced shallot and caramelize for 3–4 minutes, stirring often like it’s your side hustle.</li>
-            <li>Add chopped sun-dried tomatoes and a tablespoon of that flavorful oil from the jar. Let that mingle for 2 minutes, then slowly pour in the heavy cream. Stir and bring to a light simmer. Reduce heat to low and let it thicken for 4–5 minutes.</li>
-            <li>Prepare mashed potatoes: peel then quarter the potatoes and place in a pot of cold salted water. Add the garlic cloves and bring to a boil, cooking for around 15 minutes until fork-tender. Drain and set aside. In a new pot, heat the butter and milk/cream together, bringing to a gentle simmer. Use a ricer or mashers to combine the potatoes and garlic with the butter mixture until smooth. Turn off heat.</li>
-            <li>To serve, spoon warm mashed potatoes onto a plate, place salmon bites on top, and ladle the sun-dried tomato cream sauce over everything. Garnish with chopped parsley if desired.</li>
-          </ol>
-        </section>
-        <div class="footer">Enjoy your delicious and modern homemade salmon dish!</div>
-      </div>`;
-    } else if (recipeId === 'recipe2') {
-      container.innerHTML = `
-      <div class="recipe-card" id="recipe-card">
-        <h1>Placeholder Recipe 2</h1>
-        <div class="image-container">
-          <img src="https://via.placeholder.com/500x300?text=Recipe+2" alt="Recipe 2" class="recipe-image" />
-        </div>
-        <div class="btn-container">
-          <button id="exportPdf">Export to PDF</button>
-        </div>
-        <p style="text-align:center;">Add your recipe details here.</p>
-        <div class="footer">Enjoy your recipe!</div>
-      </div>`;
-    } else {
-      // Placeholder for other recipes
-      container.innerHTML = `
-      <div class="recipe-card" id="recipe-card">
-        <h1>Recipe Not Found</h1>
-        <p style="text-align:center;">Please add content for ${recipeId}.</p>
-      </div>`;
-    }
-    // Attach PDF event listener for new recipe
-    attachPdfEvent();
+let slideIndex = 0;
+let slideInterval = null;
+
+function showSlide(index) {
+  document.getElementById('slide-image').src = images[index];
+}
+
+function startSlideshow() {
+  if (slideInterval) clearInterval(slideInterval);
+  slideInterval = setInterval(() => {
+    slideIndex = (slideIndex + 1) % images.length;
+    showSlide(slideIndex);
+  }, 3000);
+}
+
+// When page loads, start slideshow
+document.addEventListener("DOMContentLoaded", () => {
+  showSlide(slideIndex);
+  startSlideshow();
+});
+
+// When user clicks logo, return to default view
+document.getElementById('home-logo').addEventListener('click', (e) => {
+  e.preventDefault();
+  document.getElementById('main-container').innerHTML = `
+    <div id="slideshow">
+      <img id="slide-image" src="" alt="Slideshow Image" />
+    </div>
+    <div id="quote">
+      "Cooking is an art, but all art requires knowing the basics." — Julia Child
+    </div>`;
+  showSlide(slideIndex);
+  startSlideshow();
+});
+
+// When a recipe is loaded, stop slideshow
+function loadRecipe(recipeId) {
+  clearInterval(slideInterval);
+  const container = document.getElementById('main-container');
+  container.innerHTML = ''; // clear slideshow + quote
+  // Load recipe content
+  if (recipeId === 'recipe1') {
+    container.innerHTML = `
+    <div class="recipe-card" id="recipe-card">
+      <h1>Salmon with Sun-Dried Tomato Cream Sauce</h1>
+      <div class="image-container">
+        <img src="https://wellnessbykay.com/wp-content/uploads/2024/05/marry-me-salmon-recipe.jpg" alt="Salmon Dish" class="recipe-image" />
+      </div>
+      <div class="btn-container">
+        <button id="exportPdf">Export to PDF</button>
+      </div>
+      <section>
+        <h2>Ingredients</h2>
+        <h3>Salmon</h3>
+        <ul>
+          <li>0.8 lbs (400g) fresh salmon, cubed</li>
+          <li>1 tbsp olive oil</li>
+          <li>2 tsp paprika</li>
+          <li>1 tsp garlic powder</li>
+          <li>1 tsp seasoning salt (or fish seasoning)</li>
+          <li>1 tsp Italian seasoning</li>
+          <li>1 tsp black pepper</li>
+          <li>1/4 cup white cooking wine</li>
+          <li>2 tbsp butter</li>
+          <li>5 garlic cloves, minced</li>
+          <li>1 tbsp neutral oil (avocado recommended)</li>
+          <li>1 shallot, minced</li>
+          <li>1/4 cup sun-dried tomatoes, chopped</li>
+          <li>1 tbsp sun-dried tomato oil (from the jar)</li>
+          <li>3/4 cup heavy cream (or half & half), room temp</li>
+          <li>Fresh chopped parsley, for garnish</li>
+        </ul>
+        <h3>For the Mashed Potatoes</h3>
+        <ul>
+          <li>3 pounds russet potatoes or Yukon Gold</li>
+          <li>1/4 cup salted butter, melted</li>
+          <li>5 garlic cloves</li>
+          <li>3/4 cup milk or cream</li>
+          <li>Salt, to taste</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Instructions</h2>
+        <ol class="instructions">
+          <li>Remove the skin from your salmon if applicable then cube the fillets into large bite-sized pieces — think forkable, not finger food. Pat them dry (super important for browning), toss with olive oil, and coat them in paprika, garlic powder, seasoning salt, Italian seasoning, and black pepper.</li>
+          <li>Heat neutral oil in a large skillet over medium heat. Once hot, add the salmon cubes. Cook for about 4 minutes per side until golden and sizzling. Reduce heat to medium-low, toss in butter and garlic, and gently sauté for 2–3 minutes until fragrant.</li>
+          <li>Still using the same pan, deglaze with white cooking wine — scraping up the garlicky goodness stuck to the bottom. Add minced shallot and caramelize for 3–4 minutes, stirring often like it’s your side hustle.</li>
+          <li>Add chopped sun-dried tomatoes and a tablespoon of that flavorful oil from the jar. Let that mingle for 2 minutes, then slowly pour in the heavy cream. Stir and bring to a light simmer. Reduce heat to low and let it thicken for 4–5 minutes.</li>
+          <li>Prepare mashed potatoes: peel then quarter the potatoes and place in a pot of cold salted water. Add the garlic cloves and bring to a boil, cooking for around 15 minutes until fork-tender. Drain and set aside. In a new pot, heat the butter and milk/cream together, bringing to a gentle simmer. Use a ricer or mashers to combine the potatoes and garlic with the butter mixture until smooth. Turn off heat.</li>
+          <li>To serve, spoon warm mashed potatoes onto a plate, place salmon bites on top, and ladle the sun-dried tomato cream sauce over everything. Garnish with chopped parsley if desired.</li>
+        </ol>
+      </section>
+      <div class="footer">Enjoy your delicious and modern homemade salmon dish!</div>
+    </div>`;
+  } else if (recipeId === 'recipe2') {
+    container.innerHTML = `
+    <div class="recipe-card" id="recipe-card">
+      <h1>Baked Potato Soup</h1>
+      <div class="image-container">
+        <img src="https://www.cookingclassy.com/wp-content/uploads/2024/02/baked-potato-soup-09.jpg" alt="Baked Potato Soup" class="recipe-image" />
+      </div>
+      <div class="btn-container">
+        <button id="exportPdf">Export to PDF</button>
+      </div>
+      <section>
+        <h2>Ingredients</h2>
+        <ul>
+          <li>6 slices of bacon</li>
+          <li>1 tbsp cajun seasoning</li>
+          <li>1 tbsp brown sugar</li>
+          <li>2 tbsp butter</li>
+          <li>6 garlic cloves, minced</li>
+          <li>1 large yellow onion, diced</li>
+          <li>1/3 cup all-purpose flour</li>
+          <li>2 lb of golden potatoes (900 g), peeled & cubed into 1-inch pieces</li>
+          <li>2 cups milk</li>
+          <li>1 cup heavy cream</li>
+          <li>3.5 cups chicken stock/broth</li>
+          <li>Onion seasoning: 2 tsp paprika, 1 tsp chili flakes, 2 tsp salt, 2 tsp black pepper</li>
+          <li>1 cup aged or sharp cheddar cheese</li>
+          <li>3/4 cup parmesan cheese, grated</li>
+          <li>2/3 cup sour cream</li>
+          <li>Thinly chopped fresh chives, for garnish</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Instructions</h2>
+        <ol class="instructions">
+          <li>Season the bacon slices with cajun, then cook in a Dutch oven or large pot over medium heat until crispy. Remove bacon, set aside, and leave the rendered fat.</li>
+          <li>Add diced onion to the pot, cook 5-7 min until translucent. Add onion seasonings and garlic, cook 2 more min.</li>
+          <li>Add butter, then sprinkle in flour, whisk until smooth.</li>
+          <li>Add chicken broth, milk, heavy cream, and potatoes. Bring to a simmer and cook 10-15 min until potatoes are fork-tender.</li>
+          <li>Use a hand blender to blend some of the soup to thicken, leaving chunks. Or blend half in a blender.</li>
+          <li>Chop the bacon, add back to the soup along with sour cream, cheddar, parmesan. Stir and simmer 10-20 min.</li>
+          <li>Garnish with bacon bits, cheese, sour cream, and chives.</li>
+        </ol>
+      </section>
+      <div class="footer">Enjoy your hearty baked potato soup!</div>
+    </div>`;
+  } else if (recipeId === 'recipe3') {
+    container.innerHTML = `
+    <div class="recipe-card" id="recipe-card">
+      <h1>Garlic Chili Onion Pasta</h1>
+      <div class="image-container">
+        <img src="https://assets.epicurious.com/photos/5cb8bce9b6addb519525d1b2/1:1/w_2560%2Cc_limit/Caramelized-Onion-Pasta-recipe-100419.jpg" alt="Garlic Chili Onion Pasta" class="recipe-image" />
+      </div>
+      <div class="btn-container">
+        <button id="exportPdf">Export to PDF</button>
+      </div>
+      <section>
+        <h2>Ingredients</h2>
+        <ul>
+          <li>1 large onion, thinly sliced</li>
+          <li>4 cloves of garlic, minced, plus more for garlic chili crisp</li>
+          <li>2 tablespoons of garlic chili crisp, plus more for serving (I use @ramanokram’s garlic chilli oil - so good)</li>
+          <li>Salt and pepper, to taste</li>
+          <li>1 cup of coconut milk or cream</li>
+          <li>1 teaspoon of dry parsley</li>
+          <li>8 ounces of pasta (your choice of shape)</li>
+          <li>Olive oil</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Instructions</h2>
+        <ol class="instructions">
+          <li>Start by preparing all your ingredients. Thinly slice the onion, mince the garlic, and measure out your garlic chili crisp, coconut milk or cream, and dry parsley. Set aside.</li>
+          <li>In a large skillet over medium heat, add a couple of tablespoons of olive oil. Once the oil is hot, add the sliced onions with a pinch of salt. Cook, stirring occasionally, for 10-15 minutes or until the onions are golden brown and caramelized. If the onions start to stick, you can add a little water to the pan to help deglaze it.</li>
+          <li>While the onions are caramelizing, bring a large pot of salted water to a boil. Add the pasta and cook according to package instructions until al dente. Drain and set aside, reserving some of the pasta water for later.</li>
+          <li>Once the onions are caramelized, add the minced garlic to the skillet. Cook for about 1 minute or until fragrant. Then, stir in the garlic chili crisp, along with an optional tablespoon of soy sauce and cook for another minute. Pour in the coconut milk or cream, add the dry parsley, and season with salt and pepper to taste. Let the sauce simmer for a few minutes to thicken slightly.</li>
+          <li>Add the cooked pasta to the skillet with the sauce, tossing to combine. If the sauce is too thick, add a bit of the reserved pasta water until you reach your desired consistency.</li>
+          <li>Serve the pasta hot, topped with an extra spoonful of garlic chili crisp for those who enjoy a bit more heat. You can also sprinkle some parsley on top for a hint of color. Enjoy!</li>
+        </ol>
+      </section>
+      <div class="footer">Enjoy your delicious Garlic Chili Onion Pasta!</div>
+    </div>`;
+  } else {
+    container.innerHTML = `
+    <div class="recipe-card" id="recipe-card">
+      <h1>Recipe Not Found</h1>
+      <p style="text-align:center;">Please add content for ${recipeId}.</p>
+    </div>`;
   }
-
-  // Function to attach PDF export event
-  function attachPdfEvent() {
-    const btn = document.getElementById('exportPdf');
-    if (btn) {
-      btn.onclick = () => {
-        const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF();
-        const element = document.getElementById('recipe-card');
-        html2canvas(element, { scale: 2 }).then(canvas => {
-          const imgData = canvas.toDataURL('image/png');
-          const imgProps = pdf.getImageProperties(imgData);
-          const pdfWidth = 210; // A4 width in mm
-          const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-          pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-          pdf.save('Recipe.pdf');
-        });
-      };
-    }
-  }
-
-  // Load default content and attach event on page load
-  document.addEventListener('DOMContentLoaded', () => {
-    // Load default message
-    loadRecipe('default');
-  });
+  attachPdfEvent();
+}
 </script>
-
 </body>
 </html>
