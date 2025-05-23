@@ -48,7 +48,7 @@
     color: #333;
   }
 
-  /* Dropdown with solid background */
+  /* Dropdown styles with toggle class instead of hover */
   .dropdown {
     position: relative;
   }
@@ -64,6 +64,7 @@
   .dropbtn:hover {
     background-color: #2c3e50;
   }
+  /* Hidden by default, shown when 'show' class is added */
   .dropdown-content {
     display: none;
     position: absolute;
@@ -75,7 +76,8 @@
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     z-index: 1000;
   }
-  .dropdown:hover .dropdown-content {
+  /* Show class toggles display to block */
+  .dropdown-content.show {
     display: block;
   }
   .dropdown-content a {
@@ -217,7 +219,7 @@ li {
   <a href="#" id="home-logo"><img src="https://cdn.dribbble.com/userupload/30984636/file/original-fbec83aebed9cb105f7bde614fd5adee.jpg?format=webp&resize=400x300&vertical=center" id="logo" alt="Logo"></a>
   <h1>My Recipe Collection</h1>
   <div class="dropdown">
-    <button class="dropbtn">My Recipes</button>
+    <button class="dropbtn" id="dropdownBtn">My Recipes</button>
     <div class="dropdown-content" id="recipe-list">
       <a href="#" onclick="loadRecipe('recipe1')">Salmon with Sun-Dried Tomato Cream Sauce</a>
       <a href="#" onclick="loadRecipe('recipe2')">Baked Potato Soup</a>
@@ -312,7 +314,7 @@ const quotes = [
 
 // =================== Slideshow & quote ===================
 const images = [
-  "https://www.foodandwine.com/thmb/8GTutX3bt_s__nurCmEP_zis9cM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Beer-Battered-Fish-Tacos-FT-RECIPE0522-ce3d88a65d68413784cf524dc5784115.jpg",
+  "https://www.foodandwine.com/thmb/8GTutX3bt_s__nurCmEP_zis9cM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Beer-Battered-Fish-Tacos-FT-RECIPE0522-ce3d88aebed9cb105f7bde614fd5adee.jpg",
   "https://www.foodandwine.com/thmb/2rPeNfC5SBMLPdqeY45IQjVj0bQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/garlicky-braised-lamb-shanks-with-sweet-peppers-XL-RECIPE0918-1213bf958ab544208a26f6a8ed0af4c7.jpg",
   "https://www.foodandwine.com/thmb/8-reBEkSSD3PPW2XAUJTW_k6VIs=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Adobo-Chicken-Wings-FT-RECIPE0722-16280904bb054deca32db1d3a7dd4fe0.jpg",
   "https://lirp.cdn-website.com/cf4fecee/dms3rep/multi/opt/thai-red-curry-499x454-640w.jpg"
@@ -358,6 +360,21 @@ document.addEventListener('DOMContentLoaded', () => {
     currentRecipeIndex = (currentRecipeIndex + 1) % recipes.length;
     loadRecipe(recipes[currentRecipeIndex]);
   });
+
+  // Dropdown toggle handlers
+  const dropdown = document.querySelector('.dropdown');
+  const dropbtn = document.getElementById('dropdownBtn');
+  const dropdownContent = document.getElementById('recipe-list');
+
+  dropbtn.addEventListener('click', (e) => {
+    e.stopPropagation(); // prevent event bubbling
+    dropdownContent.classList.toggle('show');
+  });
+
+  // Clicking outside closes dropdown
+  document.addEventListener('click', () => {
+    dropdownContent.classList.remove('show');
+  });
 });
 
 // =================== Reset home ===================
@@ -375,7 +392,18 @@ function resetHome() {
   // Keep arrows visible
   document.getElementById('left-arrow').style.display = 'block';
   document.getElementById('right-arrow').style.display = 'block';
-  currentRecipeIndex = 0;
+
+  // Reattach arrow event handlers
+  document.getElementById('left-arrow').addEventListener('click', () => {
+    clearInterval(slideInterval);
+    currentRecipeIndex = (currentRecipeIndex - 1 + recipes.length) % recipes.length;
+    loadRecipe(recipes[currentRecipeIndex]);
+  });
+  document.getElementById('right-arrow').addEventListener('click', () => {
+    clearInterval(slideInterval);
+    currentRecipeIndex = (currentRecipeIndex + 1) % recipes.length;
+    loadRecipe(recipes[currentRecipeIndex]);
+  });
 }
 
 // =================== Logo click handler ===================
