@@ -227,7 +227,7 @@ li {
       <a href="#" onclick="loadRecipe('recipe4')">Homemade Big Mac Tacos</a>
       <a href="#" onclick="loadRecipe('recipe5')">Salmon with Honey Cajun Seasoning</a>
       <a href="#" onclick="loadRecipe('recipe6')">Beef Short Ribs Braised in Red Wine</a>
-      <a href="#" onclick="loadRecipe('recipe7')">Beef Short Ribs Braised in Red Wine</a>
+      <a href="#" onclick="loadRecipe('recipe7')">Pork Belly with BBQ Glaze</a>
       <a href="#" onclick="loadRecipe('recipe8')">Recipe 8</a>
       <a href="#" onclick="loadRecipe('recipe9')">Recipe 9</a>
       <a href="#" onclick="loadRecipe('recipe10')">Recipe 10</a>
@@ -243,7 +243,7 @@ li {
   <div id="quote"></div>
 </div>
 
-<!-- Navigation arrows always present outside -->
+<!-- Navigation arrows outside -->
 <div id="left-arrow" class="arrow">←</div>
 <div id="right-arrow" class="arrow">→</div>
 
@@ -314,10 +314,10 @@ const quotes = [
 
 // =================== Slideshow & quote ===================
 const images = [
-  "https://www.foodandwine.com/thmb/8GTutX3bt_s__nurCmEP_zis9cM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Beer-Battered-Fish-Tacos-FT-RECIPE0522-ce3d88aebed9cb105f7bde614fd5adee.jpg",
-  "https://www.foodandwine.com/thmb/2rPeNfC5SBMLPdqeY45IQjVj0bQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/garlicky-braised-lamb-shanks-with-sweet-peppers-XL-RECIPE0918-1213bf958ab544208a26f6a8ed0af4c7.jpg",
-  "https://www.foodandwine.com/thmb/8-reBEkSSD3PPW2XAUJTW_k6VIs=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Adobo-Chicken-Wings-FT-RECIPE0722-16280904bb054deca32db1d3a7dd4fe0.jpg",
-  "https://lirp.cdn-website.com/cf4fecee/dms3rep/multi/opt/thai-red-curry-499x454-640w.jpg"
+  "https://www.foodandwine.com/thmb/8GTutX3bt_s__nurCmEP_zis9cM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Beer-Battered-Fish-Tacos-FT-RECIPE0522-ce3d88aebed9cb105f7bde614fd5adee.jpg?w=400",
+  "https://www.foodandwine.com/thmb/2rPeNfC5SBMLPdqeY45IQjVj0bQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/garlicky-braised-lamb-shanks-with-sweet-peppers-XL-RECIPE0918-1213bf958ab544208a26f6a8ed0af4c7.jpg?w=400",
+  "https://www.foodandwine.com/thmb/8-reBEkSSD3PPW2XAUJTW_k6VIs=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Adobo-Chicken-Wings-FT-RECIPE0722-16280904bb054deca32db1d3a7dd4fe0.jpg?w=400",
+  "https://lirp.cdn-website.com/cf4fecee/dms3rep/multi/opt/thai-red-curry-499x454-640w.jpg?w=400"
 ];
 
 let slideIndex = 0;
@@ -335,7 +335,7 @@ function startSlideshow() {
 }
 
 // =================== Recipes ===================
-const recipes = ['recipe1','recipe2','recipe3','recipe4','recipe5','recipe6'];
+const recipes = ['recipe1','recipe2','recipe3','recipe4','recipe5','recipe6','recipe7'];
 let currentRecipeIndex = 0;
 
 // =================== Initialization ===================
@@ -645,6 +645,41 @@ function loadRecipe(recipeId) {
         </ol>
       </section>
       <div class="footer">Enjoy your braised short ribs!</div>
+    </div>`;
+  } else if (recipeId === 'recipe7') {
+    // YOUR added recipe 7 with optimized image
+    document.getElementById('main-container').innerHTML = `
+    <div class="recipe-card" id="recipe-card">
+      <h1>Pork Belly with BBQ Glaze</h1>
+      <div class="image-container">
+        <img src="https://www.burntpelletbbq.com/wp-content/uploads/2023/06/IMG_8237-edited.jpeg" alt="Pork Belly" class="recipe-image" />
+      </div>
+      <div class="btn-container"><button id="exportPdf">Export to PDF</button></div>
+      <section>
+        <h2>Ingredients</h2>
+        <ul>
+          <li>3 pounds of skinless pork belly</li>
+          <li>1/2 cup brown sugar</li>
+          <li>3 tbsp unsalted butter</li>
+          <li>2 tbsp honey</li>
+          <li>1/2 cup of BBQ sauce</li>
+          <li>3 tbsp of BBQ rub</li>
+          <li>1 tbsp yellow mustard</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Instructions</h2>
+        <ol class="instructions">
+          <li>Cube the pork belly into 1.5 x 1.5 inch cubes</li>
+          <li>Use yellow mustard as a binder then season the pork belly with a BBQ rub</li>
+          <li>Place them on a wire rack, then smoke them at 250°F for 2.5 hours spritzing every hour with 50/50 apple juice and apple cider vinegar.</li>
+          <li>Move the pork belly from the smoker into a foil pan with butter, brown sugar, honey and BBQ sauce.</li>
+          <li>Top the pan with aluminum foil then place it back on the smoker for another 45 minutes.</li>
+          <li>Remove the aluminum foil from the pan, stir then let it cook another 15 minutes.</li>
+          <li>Once they reach an internal temp of 205°F, serve them warm and enjoy!</li>
+        </ol>
+      </section>
+      <div class="footer">Enjoy!</div>
     </div>`;
   } else {
     document.getElementById('main-container').innerHTML = `
