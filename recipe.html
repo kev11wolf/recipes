@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Greek Parmesan Chicken & Potatoes</title>
+<!-- Google Fonts for a modern, classic look -->
+<link href="https://fonts.googleapis.com/css2?family=Georgia&display=swap" rel="stylesheet" />
+<style>
+  body {
+    font-family: Georgia, serif;
+    margin: 0.75in;
+    font-size: 10pt;
+    line-height: 1.2;
+    color: #333;
+  }
+
+  /* Button styling */
+  #printBtn {
+    display: block;
+    margin: 1em auto;
+    padding: 0.5em 1em;
+    font-size: 14px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  #printBtn:hover {
+    background-color: #555;
+  }
+
+  /* Title */
+  h1 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 0.2em;
+  }
+
+  /* Image styling - smaller for print */
+  .header-image {
+    display: block;
+    margin: 0.5em auto 1em auto;
+    max-width: 250px;
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+  }
+
+  /* Ingredients columns layout */
+  .ingredients-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    margin-bottom: 1em;
+  }
+  .ingredients-column {
+    flex: 1 1 30%;
+    min-width: 150px;
+  }
+  h2 {
+    font-size: 16px;
+    margin-bottom: 0.2em;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0.1em;
+  }
+  h3 {
+    font-size: 12pt;
+    margin-top: 0.5em;
+    margin-bottom: 0.2em;
+  }
+  ul {
+    padding-left: 1em;
+    margin: 0;
+    font-size: 10pt;
+  }
+
+  /* Instructions */
+  .instructions {
+    margin-top: 1em;
+  }
+  ol {
+    margin-left: 1em;
+    margin-top: 0.2em;
+    margin-bottom: 0.4em;
+    font-size: 10pt;
+  }
+  ol li {
+    margin-bottom: 0.2em;
+  }
+
+  /* Final notes */
+  .final {
+    margin-top: 1em;
+  }
+
+  /* Print adjustments for compactness */
+  @media print {
+    body {
+      margin: 0.5in;
+      font-size: 9pt;
+    }
+    #printBtn {
+      display: none; /* hide button in print */
+    }
+    .ingredients-container {
+      flex-direction: row;
+      flex-wrap: nowrap;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Print button -->
+<button id="printBtn" onclick="window.print()">Print to PDF</button>
+
+<h1>One-Pan Greek Parmesan Chicken & Potatoes with Roasted Garlic Tzaziki</h1>
+
+<!-- Header image (replace URL if needed) -->
+<img src="https://i.postimg.cc/J4zjZFx2/Screenshot-2025-05-24-110344.png" alt="Recipe Header Image" class="header-image" />
+
+<!-- Ingredients in three columns -->
+<div class="ingredients-container">
+  <div class="ingredients-column">
+    <h3>For the Chicken and Potatoes</h3>
+    <ul>
+      <li>6 chicken thighs, bone-in & skin-on</li>
+      <li>2 lemons, juiced</li>
+      <li>2 tbsp dijon mustard</li>
+      <li>1 1/2 tbsp oregano</li>
+      <li>1 tbsp paprika</li>
+      <li>2 tsp salt</li>
+      <li>2 tsp black pepper</li>
+      <li>2 tsp garlic powder</li>
+      <li>2 tbsp lemon zest</li>
+      <li>8 garlic cloves, smashed</li>
+      <li>5 tbsp olive oil</li>
+      <li>1/2 cup parmesan cheese, grated</li>
+      <li>Fresh parsley and dill, for garnish</li>
+      <li>1.5 lb (680g) baby golden potatoes, halved</li>
+    </ul>
+  </div>
+  <div class="ingredients-column">
+    <h3>Garlic Parmesan Butter</h3>
+    <ul>
+      <li>1/4 cup butter</li>
+      <li>1 cup parmesan cheese, grated</li>
+      <li>5 garlic cloves</li>
+      <li>2 tsp black pepper</li>
+    </ul>
+  </div>
+  <div class="ingredients-column">
+    <h3>Roasted Garlic Tzaziki</h3>
+    <ul>
+      <li>2 garlic heads (roasted with 2 tbsp olive oil & 2 tsp salt)</li>
+      <li>1 tbsp fresh dill, finely chopped</li>
+      <li>1/3 cup grated cucumber</li>
+      <li>1 cup plain Greek yogurt</li>
+      <li>1 tsp salt</li>
+      <li>1 tbsp lemon juice</li>
+      <li>1 tbsp olive oil</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Instructions -->
+<div class="instructions">
+<h2>Preparation</h2>
+<ol>
+  <li>In a bowl, mix the melted butter, 1 cup grated parmesan, minced garlic, and black pepper until it forms a thick paste.</li>
+  <li>Spread the garlic parmesan butter evenly along the bottom of a large casserole dish (10"x15" is ideal). Halve the baby potatoes and place them cut side down into the parmesan butter.</li>
+  <li>Pat the chicken thighs dry with paper towel then add them on top of the potatoes, skin-side up.</li>
+  <li>Preheat the oven to 375°F (190°C).</li>
+  <li>Mix together the seasonings: 1 1/2 tbsp oregano, 1 tbsp paprika, 2 tsp black pepper, 2 tsp garlic powder, 2 tsp salt. Toss onto the chicken along with 5 tbsp olive oil, 2 tbsp dijon mustard, the juice of 2 lemons, 2 tbsp of lemon zest, and 8 smashed garlic cloves. Massage this zesty marinade all over the chicken thighs, ensuring every nook and cranny is coated. Rub the coated thighs over the potatoes to share the love, then ensure the chicken is skin-side up on top of the potatoes. Sprinkle with 1/4 cup parmesan.</li>
+  <li>Cut the tops off of two garlic heads (about 1/4 inch to expose the cloves). Place onto a sheet of tinfoil, then drizzle each head with olive oil and salt. Wrap tightly, then place the foil-wrapped garlic onto the baking tray.</li>
+  <li>Bake for 50 minutes, then carefully remove the foil-wrapped garlic and set aside to cool slightly.</li>
+  <li>Return the tray to the oven and bake for another 20-30 minutes until the chicken skin is deeply golden and the potatoes are fork-tender. For extra crispy skin, increase oven temp to 400°F for the last 10 minutes.</li>
+  <li>While everything’s finishing up, squeeze the roasted garlic cloves into a bowl. Add Greek yogurt, grated cucumber, fresh dill, salt, lemon juice, and olive oil. Mix until creamy and dreamy. Taste and adjust salt/lemon juice as needed.</li>
+  <li>Remove the tray from the oven. Baste the chicken thighs with the pan juices. Sprinkle with a final dusting of parmesan cheese, fresh chopped parsley, little sprigs of dill, and lemon slices.</li>
+</ol>
+</div>
+
+<!-- Final notes -->
+<div class="final">
+<h2>Recommended Plating</h2>
+<p>Spread 3 tbsp of tzaziki into a circular bed, topped with two chicken thighs, a handful of potatoes, and a drizzle of remaining pan juices. Garnish as you wish and enjoy!</p>
+</div>
+
+<script>
+  // Optional: automatically trigger print on button click
+  document.getElementById('printBtn').addEventListener('click', function() {
+    window.print();
+  });
+</script>
+
+</body>
+</html>
